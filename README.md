@@ -1,120 +1,130 @@
-[![Buy Me a Coffee](https://img.shields.io/badge/donate-Buy%20Me%20a%20Coffee-blue.svg)](https://www.buymeacoffee.com/vschroeter) 
+# Obsidian Virtual Linker 插件（术语表/词汇表插件）
+
+[![Buy Me a Coffee](https://img.shields.io/badge/donate-Buy%20Me%20a%20Coffee-blue.svg)](https://www.buymeacoffee.com/vschroeter)
 [![PayPal](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://paypal.me/valentinschroeter)
 
-# Obsidian Virtual Linker Plugin (Glossary Plugin)
+本插件会自动为你的笔记内容生成“虚拟链接”：当当前笔记中的文本与库中其他笔记的标题或别名匹配时，会显示为可点击链接。
 
-This plugin automatically generates virtual links for text within your notes that match with the titles or aliases of other notes in your vault.
+特性：
 
-Features:
-- create a glossary like functionality
-- works in **edit mode** and **read mode**
-- created links are **always up to date** 
-- **no manual linking** necessary 
-- works with **aliases** of notes
-- links do not appear in graph view & reference counting
-- updates the links automatically while you expand your vault or type new text
-- convert the virtual links to real links in the context menu
+- 提供类似术语表/词汇表的功能
+- 同时支持 **编辑模式** 与 **阅读模式**
+- 生成的链接 **始终保持最新**
+- **无需手动添加链接**
+- 支持笔记的 **别名（aliases）**
+- 链接不会出现在关系图（Graph view）与反向链接计数中
+- 当你扩展库或输入新文本时，会自动更新链接
+- 可在右键菜单中将虚拟链接转换为真实链接
 
-Usage demo (literally just typing text ;-):
+使用演示（真的就是打字而已 ;-）：
 ![Demo](media/LinkerDemo.gif)
 
-## Usage
+## 使用方法
 
-By default, the plugin will automatically link all notes of your vault.
-All occurrences of a note title or alias will be linked in your current note text.
-If you only want to include notes of a specific folder, you can define this folder in the settings.
-
-> [!Note]
-> The auto generated links are post-processed, so they neither change your note text to hard-coded links enclosed in brackets not 
-> appear in the graph view or reference counting.
-
-## Installing the plugin
-
-Inside obsidian, you can search for "Virtual Linker" in the community plugins tab.
-After installing, enable the plugin in the settings.
-
-To manually install the plugin:
-- Copy over `main.js` & `manifest.json` (find them under `Releases`) to your vault `VaultFolder/.obsidian/plugins/virtual-linker/`.
-- or clone the repository into the plugins folder of your vault and build the plugin yourself.
-
-## Settings
-
-## Matched files
-
-You can toggle the matching of files between:
-- "Match all files": All files in your vault are matched.
-- "Match only files in a specific folder": Only files in a specific folder are matched. You can specify the folder in the settings. This is useful if you want to only create virtual links to notes in a dedicated glossary directory.
-
-Furthermore, you can explicitly include or exclude specific files from being matched, by adding a tag to the file. You can change the tag in the settings, by default it is:
-- `linker-include` to explicitly include a file
-- `linker-exclude` to explicitly exclude a file
-
-You can also exclude all files in a specific folder by adding the folder to the exclude list in the settings.
+默认情况下，插件会对库中的所有笔记启用匹配并自动生成链接。
+在当前笔记文本中，凡是出现了某个笔记标题或别名的地方，都会被链接起来。
+如果你只希望包含某个特定文件夹下的笔记，可以在设置中指定该文件夹。
 
 > [!Note]
-> To include / exclude a file or folder, you can use the context menu on virtual links or in the file explorer.
+> 自动生成的链接会在渲染阶段进行后处理：它们不会把你的笔记文本改成带中括号的硬编码链接，也不会出现在关系图或引用计数中。
 
-### Case sensitivity
-You can toggle the case sensitivity of the matching. By default, the matching is case insensitive.
+## 安装插件
 
-Often there are words with mainly capitalized letters, that should be matched case sensitive. By default, words with 75% or more capitalized letters are matched case sensitive. You can change this threshold in the settings.
+在 Obsidian 中，你可以在“社区插件（Community plugins）”里搜索 “Virtual Linker”。
+安装后，在设置中启用插件即可。
 
-You can also explicitly change the case sensitivity of a specific file by adding a tag to the file. You can change the tag in the settings, by default it is:
-- `linker-match-case` to make the matching case sensitive
-- `linker-ignore-case` to make the matching case insensitive
+手动安装插件：
 
-If you want to define the case sensitivity for specific aliases, you can define the frontmatter property lists in a note:
-- `linker-match-case` with a list of names that should be matched only case sensitive
-- `linker-ignore-case` with a list of names that should be matched case insensitive 
-These property names can be changed in the settings.
+- 将 `main.js` 和 `manifest.json`（在 `Releases` 中）复制到你的库目录：`VaultFolder/.obsidian/plugins/virtual-linker/`
+- 或者把仓库克隆到库的 plugins 目录中，然后自行构建插件
 
-### Matching mode
+## 设置
 
-#### Suppress multiple matching and matching to real links
-By default, the plugin will suppress several identical virtual link in the same note.
-Furthermore, you can toggle to suppress the creation of virtual links to files, that are linked by real links in the current note. 
+## 匹配文件
 
-#### Part matching
-You can toggle the matching mode between:
-- "Matching only whole words": Only whole words are matched. E.g. "book" will not match "Notebook".
-- "Match also beginning of words": The beginning of a word is matched. E.g. "book" will not match "Notebook", but "Note" will match "Notebook".
-- "Matching any part of a word": Any part of a word is matched. E.g. "book" will match "Notebook".
+你可以在以下文件匹配方式之间切换：
 
-You furthermore have the option to suppress the link suffix for these matches to avoid cluttering your text.
+- “Match all files”：匹配库中的所有文件
+- “Match only files in a specific folder”：只匹配特定文件夹中的文件。你可以在设置中指定该文件夹。如果你只想对一个专门的术语表目录创建虚拟链接，这会很有用。
 
-#### Links to the note itself
-By default, links to a note itself are suppressed.
-This link suppression might be a bit buggy and not work in all cases, e.g. in preview windows.
-If you like self-links to the note itself, you can toggle this behavior in the settings.
+此外，你还可以通过给文件添加标签（tag）来显式地包含/排除某些文件。标签名可在设置中修改，默认值为：
 
-#### Link suppression in current line 
-By default, links are created directly as you type.
-You can disable links for the current line you are typing.
+- `linker-include`：显式包含该文件
+- `linker-exclude`：显式排除该文件
+
+你也可以在设置中的排除列表里添加某个文件夹，从而排除该文件夹下的所有文件。
 
 > [!Note]
-> Deactivating the link creation for the current line is recommended when using the plugin with IME (input method editor) for languages like Chinese or Japanese, as the plugin might otherwise interfere with the IME.
+> 要包含/排除某个文件或文件夹，可以在虚拟链接上或文件浏览器中使用右键菜单。
 
+### 大小写敏感
 
-### Styling of the links
+你可以切换匹配时是否区分大小写。默认情况下，匹配不区分大小写。
 
-Any created virtual link will be appended with this suffix. This is useful to distinguish between real and virtual links.
-By default, the suffix is "🔗".
+有些词主要由大写字母组成，更适合区分大小写匹配。默认情况下，如果一个词中大写字母占比达到 75% 或以上，会自动按区分大小写来匹配。你可以在设置中调整这个阈值。
 
-By default (and if the default styling is toggled on in the settings), the links appear a little bit darker than your normal links.
-You can turn off this default styling in the settings.
+你也可以通过给文件添加标签来显式指定该文件的大小写匹配规则。标签名可在设置中修改，默认值为：
 
-To apply custom styling to the links, you can add a CSS-snippet at `VaultFolder/.obsidian/snippets/virtualLinks.css` file.
+- `linker-match-case`：对该文件的匹配区分大小写
+- `linker-ignore-case`：对该文件的匹配不区分大小写
+
+如果你想为某些别名单独定义大小写规则，可以在笔记的 frontmatter 中定义属性列表：
+
+- `linker-match-case`：列表内名称只按区分大小写匹配
+- `linker-ignore-case`：列表内名称按不区分大小写匹配
+这些属性名也可以在设置中修改。
+
+### 匹配模式
+
+#### 抑制重复匹配与已真实链接的文件
+
+默认情况下，插件会在同一篇笔记中抑制重复的相同虚拟链接。
+此外，你还可以选择：如果当前笔记里已经通过真实链接链接到了某个文件，则不再为它生成虚拟链接。
+
+#### 部分匹配
+
+你可以在以下匹配模式之间切换：
+
+- “Matching only whole words”：只匹配完整单词。例如 “book” 不会匹配 “Notebook”
+- “Match also beginning of words”：匹配单词开头。例如 “book” 不会匹配 “Notebook”，但 “Note” 会匹配 “Notebook”
+- “Matching any part of a word”：匹配单词任意部分。例如 “book” 会匹配 “Notebook”
+
+你还可以选择对这些匹配不显示链接后缀，以避免文本过于杂乱。
+
+#### 指向自身笔记的链接
+
+默认情况下，插件会抑制指向当前笔记自身的链接。
+这一抑制逻辑可能在某些场景下不太稳定（例如预览窗口）。
+如果你希望允许自链接，可以在设置中切换该行为。
+
+#### 当前行链接抑制
+
+默认情况下，链接会在你输入时即时生成。
+你可以选择对当前正在输入的这一行禁用链接。
+
+> [!Note]
+> 如果你使用中文/日文等需要 IME（输入法编辑器）的语言，建议禁用当前行的链接生成，否则插件可能会干扰 IME。
+
+### 链接样式
+
+任何生成的虚拟链接都会追加一个后缀，用于区分真实链接与虚拟链接。
+默认后缀为 “🔗”。
+
+默认情况下（且设置中开启了默认样式时），虚拟链接会比普通链接更暗一些。
+你可以在设置中关闭该默认样式。
+
+如果你想自定义样式，可以在 `VaultFolder/.obsidian/snippets/virtualLinks.css` 中添加 CSS 片段。
 
 ```css
-/* Properties of the virtual link when not hovered */
+/* 未悬停时虚拟链接的样式 */
 .virtual-link.glossary-entry a {
-    /* To have the normal text color when not hovered */
+    /* 未悬停时使用普通文本颜色 */
     color: inherit;
 
-    /* Or add a color, e.g. red */
+    /* 或者设置一个颜色，例如红色 */
     /* color: red; */
 
-    /* You can also change the underline of the link in thickness, color, and other properties */
+    /* 你也可以调整下划线的粗细、颜色等属性 */
     text-decoration-thickness: 1px;
     text-decoration-color: rgb(var(--color-purple-rgb), 0.6);
     text-underline-position: under;
@@ -122,38 +132,38 @@ To apply custom styling to the links, you can add a CSS-snippet at `VaultFolder/
     /* text-underline-offset: 0em; */
 }
 
-/* Properties of the virtual link when hovered */
+/* 悬停时虚拟链接的样式 */
 .virtual-link.glossary-entry a:hover {
     color: var(--link-color);
 }
 ```
 
 > [!Note]
-> If you want to apply custom styling, don't forget to turn off the "Apply default link styling" in the settings.
+> 如果你想应用自定义样式，别忘了在设置中关闭 “Apply default link styling”。
 
-## Commands
+## 命令
 
-The plugin provides the following commands that you can use:
+插件提供了以下可用命令：
 
-- **Convert All Virtual Links in Selection to Real Links**: Converts all virtual links within the selected text to real links.
-- **Activate Virtual Linker**: Activates the virtual linker if it is currently deactivated.
-- **Deactivate Virtual Linker**: Deactivates the virtual linker if it is currently activated.
+- **Convert All Virtual Links in Selection to Real Links**：将选中文本中的所有虚拟链接转换为真实链接
+- **Activate Virtual Linker**：如果当前已停用，则启用 Virtual Linker
+- **Deactivate Virtual Linker**：如果当前已启用，则停用 Virtual Linker
 
-You can access these commands from the command palette or assign custom hotkeys to them in the settings.
+你可以在命令面板中使用这些命令，也可以在设置中为它们分配快捷键。
 
-## Context Menu Options
+## 右键菜单选项
 
-When right-clicking on a virtual link, the following options are available in the context menu:
+在虚拟链接上右键时，菜单中会出现以下选项：
 
-- **Convert to real link**: Converts the selected virtual link to a real link.
-- **Exclude this file**: Adds the `linker-exclude` tag to the file, preventing it from being matched by the virtual linker.
-- **Include this file**: Adds the `linker-include` tag to the file, ensuring it is matched by the virtual linker.
+- **Convert to real link**：将选中的虚拟链接转换为真实链接
+- **Exclude this file**：给该文件添加 `linker-exclude` 标签，使其不再参与匹配
+- **Include this file**：给该文件添加 `linker-include` 标签，确保其参与匹配
 
-## How to use for development
+## 开发使用
 
-- Clone this repo (into `your-vault/.obsidian/plugins/`).
-- `yarn` to install dependencies
-- `yarn dev` to start compilation in watch mode.
-- `yarn build` to compile your `main.ts` into `main.js`.
+- 克隆本仓库（到 `your-vault/.obsidian/plugins/` 下）。
+- 运行 `yarn` 安装依赖
+- 运行 `yarn dev` 以监听模式开始编译
+- 运行 `yarn build` 将 `main.ts` 编译为 `main.js`
 
-It is recommended to use the [Hot Reload Plugin](https://github.com/pjeby/hot-reload) for development.
+开发时建议搭配使用 [Hot Reload Plugin](https://github.com/pjeby/hot-reload)。
