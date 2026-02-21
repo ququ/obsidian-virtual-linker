@@ -623,7 +623,7 @@ class LinkerSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         // Toggle to activate or deactivate the linker
-        new Setting(containerEl).setName('Activate Virtual Linker').addToggle((toggle) =>
+        new Setting(containerEl).setName('启用虚拟链接器').addToggle((toggle) =>
             toggle.setValue(this.plugin.settings.linkerActivated).onChange(async (value) => {
                 // console.log("Linker activated: " + value);
                 await this.plugin.updateSettings({ linkerActivated: value });
@@ -631,7 +631,7 @@ class LinkerSettingTab extends PluginSettingTab {
         );
 
         // Toggle to show advanced settings
-        new Setting(containerEl).setName('Show advanced settings').addToggle((toggle) =>
+        new Setting(containerEl).setName('显示高级设置').addToggle((toggle) =>
             toggle.setValue(this.plugin.settings.advancedSettings).onChange(async (value) => {
                 // console.log("Advanced settings: " + value);
                 await this.plugin.updateSettings({ advancedSettings: value });
@@ -639,12 +639,12 @@ class LinkerSettingTab extends PluginSettingTab {
             })
         );
 
-        new Setting(containerEl).setName('Matching behavior').setHeading();
+        new Setting(containerEl).setName('匹配行为').setHeading();
 
         // Toggle to include aliases
         new Setting(containerEl)
-            .setName('Include aliases')
-            .setDesc('If activated, the virtual linker will also include aliases for the files.')
+            .setName('包含别名')
+            .setDesc('启用后，虚拟链接器还会包含文件的别名。')
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.includeAliases).onChange(async (value) => {
                     // console.log("Include aliases: " + value);
@@ -655,8 +655,8 @@ class LinkerSettingTab extends PluginSettingTab {
         if (this.plugin.settings.advancedSettings) {
             // Toggle to only link once
             new Setting(containerEl)
-                .setName('Only link once')
-                .setDesc('If activated, there will not be several identical virtual links in the same note (Wikipedia style).')
+                .setName('只链接一次')
+                .setDesc('启用后，同一笔记中不会存在多个相同的虚拟链接（维基百科风格）。')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.onlyLinkOnce).onChange(async (value) => {
                         // console.log("Only link once: " + value);
@@ -666,8 +666,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Toggle to exclude links to real linked files
             new Setting(containerEl)
-                .setName('Exclude links to real linked files')
-                .setDesc('If activated, there will be no links to files that are already linked in the note by real links.')
+                .setName('排除对已真实链接文件的链接')
+                .setDesc('启用后，不会对笔记中已通过真实链接链接的文件创建虚拟链接。')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.excludeLinksToRealLinkedFiles).onChange(async (value) => {
                         // console.log("Exclude links to real linked files: " + value);
@@ -678,8 +678,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
         // If headers should be matched or not
         new Setting(containerEl)
-            .setName('Include headers')
-            .setDesc('If activated, headers (so your lines beginning with at least one `#`) are included for virtual links.')
+            .setName('包含标题')
+            .setDesc('启用后，标题（即以至少一个 `#` 开头的行）也会被包含在虚拟链接中。')
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.includeHeaders).onChange(async (value) => {
                     // console.log("Include headers: " + value);
@@ -689,8 +689,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
         // Toggle setting to match only whole words or any part of the word
         new Setting(containerEl)
-            .setName('Match any part of a word')
-            .setDesc('If deactivated, only whole words are matched. Otherwise, every part of a word is found.')
+            .setName('匹配单词的任意部分')
+            .setDesc('禁用后，仅匹配完整单词。否则，会找到单词的每个部分。')
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.matchAnyPartsOfWords).onChange(async (value) => {
                     // console.log("Match only whole words: " + value);
@@ -702,8 +702,8 @@ class LinkerSettingTab extends PluginSettingTab {
         if (!this.plugin.settings.matchAnyPartsOfWords) {
             // Toggle setting to match only beginning of words
             new Setting(containerEl)
-                .setName('Match the beginning of words')
-                .setDesc('If activated, the beginnings of words are also linked, even if it is not a whole match.')
+                .setName('匹配单词开头')
+                .setDesc('启用后，即使不是完整匹配，单词的开头也会被链接。')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.matchBeginningOfWords).onChange(async (value) => {
                         // console.log("Match only beginning of words: " + value);
@@ -714,8 +714,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Toggle setting to match only end of words
             new Setting(containerEl)
-                .setName('Match the end of words')
-                .setDesc('If activated, the ends of words are also linked, even if it is not a whole match.')
+                .setName('匹配单词结尾')
+                .setDesc('启用后，即使不是完整匹配，单词的结尾也会被链接。')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.matchEndOfWords).onChange(async (value) => {
                         // console.log("Match only end of words: " + value);
@@ -728,8 +728,8 @@ class LinkerSettingTab extends PluginSettingTab {
         // Toggle setting to suppress suffix for sub words
         if (this.plugin.settings.matchAnyPartsOfWords || this.plugin.settings.matchBeginningOfWords) {
             new Setting(containerEl)
-                .setName('Suppress suffix for sub words')
-                .setDesc('If activated, the suffix is not added to links for subwords, but only for complete matches.')
+                .setName('对子词隐藏后缀')
+                .setDesc('启用后，后缀不会添加到子词的链接上，只添加到完整匹配上。')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.suppressSuffixForSubWords).onChange(async (value) => {
                         // console.log("Suppress suffix for sub words: " + value);
@@ -741,9 +741,9 @@ class LinkerSettingTab extends PluginSettingTab {
         if (this.plugin.settings.advancedSettings) {
             // Toggle setting to exclude links in the current line start for fixing IME
             new Setting(containerEl)
-                .setName('Fix IME problem')
+                .setName('修复输入法问题')
                 .setDesc(
-                    'If activated, there will be no links in the current line start which is followed immediately by the Input Method Editor (IME). This is the recommended setting if you are using IME (input method editor) for typing, e.g. for chinese characters, because instant linking might interfere with IME.'
+                    '启用后，在当前行开头紧跟着输入法编辑器（IME）的位置将不会创建链接。如果您使用输入法（如中文输入法）输入，这是推荐的设置，因为即时链接可能会干扰输入法。'
                 )
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.fixIMEProblem).onChange(async (value) => {
@@ -756,8 +756,8 @@ class LinkerSettingTab extends PluginSettingTab {
         if (this.plugin.settings.advancedSettings) {
             // Toggle setting to exclude links in the current line
             new Setting(containerEl)
-                .setName('Avoid linking in current line')
-                .setDesc('If activated, there will be no links in the current line.')
+                .setName('避免在当前行创建链接')
+                .setDesc('启用后，当前行将不会创建链接。')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.excludeLinksInCurrentLine).onChange(async (value) => {
                         // console.log("Exclude links in current line: " + value);
@@ -782,12 +782,12 @@ class LinkerSettingTab extends PluginSettingTab {
             // 	);
         }
 
-        new Setting(containerEl).setName('Case sensitivity').setHeading();
+        new Setting(containerEl).setName('大小写敏感').setHeading();
 
         // Toggle setting for case sensitivity
         new Setting(containerEl)
-            .setName('Case sensitive')
-            .setDesc('If activated, the matching is case sensitive.')
+            .setName('区分大小写')
+            .setDesc('启用后，匹配将区分大小写。')
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.matchCaseSensitive).onChange(async (value) => {
                     // console.log("Case sensitive: " + value);
@@ -799,9 +799,9 @@ class LinkerSettingTab extends PluginSettingTab {
         if (this.plugin.settings.advancedSettings) {
             // Number input setting for capital letter proportion for automatic match case
             new Setting(containerEl)
-                .setName('Capital letter percentage for automatic match case')
+                .setName('自动匹配大小写的大写字母百分比')
                 .setDesc(
-                    'The percentage (0 - 100) of capital letters in a file name or alias to be automatically considered as case sensitive.'
+                    '文件名或别名中大写字母的百分比（0 - 100），达到此比例将自动被视为区分大小写。'
                 )
                 .addText((text) =>
                     text
@@ -825,8 +825,8 @@ class LinkerSettingTab extends PluginSettingTab {
             if (this.plugin.settings.matchCaseSensitive) {
                 // Text setting for tag to ignore case
                 new Setting(containerEl)
-                    .setName('Tag to ignore case')
-                    .setDesc('By adding this tag to a file, the linker will ignore the case for the file.')
+                    .setName('忽略大小写的标签')
+                    .setDesc('通过将此标签添加到文件，链接器将忽略该文件的大小写。')
                     .addText((text) =>
                         text.setValue(this.plugin.settings.tagToIgnoreCase).onChange(async (value) => {
                             // console.log("New tag to ignore case: " + value);
@@ -836,8 +836,8 @@ class LinkerSettingTab extends PluginSettingTab {
             } else {
                 // Text setting for tag to match case
                 new Setting(containerEl)
-                    .setName('Tag to match case')
-                    .setDesc('By adding this tag to a file, the linker will match the case for the file.')
+                    .setName('匹配大小写的标签')
+                    .setDesc('通过将此标签添加到文件，链接器将匹配该文件的大小写。')
                     .addText((text) =>
                         text.setValue(this.plugin.settings.tagToMatchCase).onChange(async (value) => {
                             // console.log("New tag to match case: " + value);
@@ -848,9 +848,9 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Text setting for property name to ignore case
             new Setting(containerEl)
-                .setName('Property name to ignore case')
+                .setName('忽略大小写的属性名')
                 .setDesc(
-                    'By adding this property to a note, containing a list of names, the linker will ignore the case for the specified names / aliases. This way you can decide, which alias should be insensitive.'
+                    '通过在笔记中添加此属性，包含一个名称列表，链接器将忽略指定名称/别名的大小写。这样您可以决定哪些别名应该不区分大小写。'
                 )
                 .addText((text) =>
                     text.setValue(this.plugin.settings.propertyNameToIgnoreCase).onChange(async (value) => {
@@ -861,9 +861,9 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Text setting for property name to match case
             new Setting(containerEl)
-                .setName('Property name to match case')
+                .setName('匹配大小写的属性名')
                 .setDesc(
-                    'By adding this property to a note, containing a list of names, the linker will match the case for the specified names / aliases. This way you can decide, which alias should be case sensitive.'
+                    '通过在笔记中添加此属性，包含一个名称列表，链接器将匹配指定名称/别名的大小写。这样您可以决定哪些别名应该区分大小写。'
                 )
                 .addText((text) =>
                     text.setValue(this.plugin.settings.propertyNameToMatchCase).onChange(async (value) => {
@@ -873,11 +873,11 @@ class LinkerSettingTab extends PluginSettingTab {
                 );
         }
 
-        new Setting(containerEl).setName('Matched files').setHeading();
+        new Setting(containerEl).setName('匹配的文件').setHeading();
 
         new Setting(containerEl)
-            .setName('Include all files')
-            .setDesc('Include all files for the virtual linker.')
+            .setName('包含所有文件')
+            .setDesc('为虚拟链接器包含所有文件。')
             .addToggle((toggle) =>
                 toggle
                     // .setValue(true)
@@ -891,8 +891,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
         if (!this.plugin.settings.includeAllFiles) {
             new Setting(containerEl)
-                .setName('Glossary linker directories')
-                .setDesc('Directories to include for the virtual linker (separated by new lines).')
+                .setName('词汇表链接器目录')
+                .setDesc('要包含在虚拟链接器中的目录（用换行分隔）。')
                 .addTextArea((text) => {
                     let setValue = '';
                     try {
@@ -901,7 +901,7 @@ class LinkerSettingTab extends PluginSettingTab {
                         console.warn(e);
                     }
 
-                    text.setPlaceholder('List of directory names (separated by new line)')
+                    text.setPlaceholder('目录名称列表（用换行分隔）')
                         .setValue(setValue)
                         .onChange(async (value) => {
                             this.plugin.settings.linkerDirectories = value
@@ -918,9 +918,9 @@ class LinkerSettingTab extends PluginSettingTab {
         } else {
             if (this.plugin.settings.advancedSettings) {
                 new Setting(containerEl)
-                    .setName('Excluded directories')
+                    .setName('排除的目录')
                     .setDesc(
-                        'Directories from which files are to be excluded for the virtual linker (separated by new lines). Files in these directories will not create any virtual links in other files.'
+                        '要从虚拟链接器中排除文件的目录（用换行分隔）。这些目录中的文件不会在其他文件中创建任何虚拟链接。'
                     )
                     .addTextArea((text) => {
                         let setValue = '';
@@ -930,7 +930,7 @@ class LinkerSettingTab extends PluginSettingTab {
                             console.warn(e);
                         }
 
-                        text.setPlaceholder('List of directory names (separated by new line)')
+                        text.setPlaceholder('目录名称列表（用换行分隔）')
                             .setValue(setValue)
                             .onChange(async (value) => {
                                 this.plugin.settings.excludedDirectories = value
@@ -950,8 +950,8 @@ class LinkerSettingTab extends PluginSettingTab {
         if (this.plugin.settings.advancedSettings) {
             // Text setting for tag to include file
             new Setting(containerEl)
-                .setName('Tag to include file')
-                .setDesc('Tag to explicitly include the file for the linker.')
+                .setName('包含文件的标签')
+                .setDesc('明确包含文件到链接器的标签。')
                 .addText((text) =>
                     text.setValue(this.plugin.settings.tagToIncludeFile).onChange(async (value) => {
                         // console.log("New tag to include file: " + value);
@@ -961,8 +961,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Text setting for tag to ignore file
             new Setting(containerEl)
-                .setName('Tag to ignore file')
-                .setDesc('Tag to ignore the file for the linker.')
+                .setName('忽略文件的标签')
+                .setDesc('忽略文件不参与链接器的标签。')
                 .addText((text) =>
                     text.setValue(this.plugin.settings.tagToExcludeFile).onChange(async (value) => {
                         // console.log("New tag to ignore file: " + value);
@@ -972,8 +972,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Toggle setting to exclude links to the active file
             new Setting(containerEl)
-                .setName('Exclude self-links to the current note')
-                .setDesc('If toggled, links to the note itself are excluded from the linker. (This might not work in preview windows.)')
+                .setName('排除当前笔记的自链接')
+                .setDesc('启用后，链接器将排除指向笔记本身的链接。（这在预览窗口中可能不起作用。）')
                 .addToggle((toggle) =>
                     toggle.setValue(this.plugin.settings.excludeLinksToOwnNote).onChange(async (value) => {
                         // console.log("Exclude links to active file: " + value);
@@ -983,8 +983,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Setting to exclude directories from the linker to be executed
             new Setting(containerEl)
-                .setName('Excluded directories for generating virtual links')
-                .setDesc('Directories in which the plugin will not create virtual links (separated by new lines).')
+                .setName('不生成虚拟链接的排除目录')
+                .setDesc('插件不会在这些目录中创建虚拟链接（用换行分隔）。')
                 .addTextArea((text) => {
                     let setValue = '';
                     try {
@@ -993,7 +993,7 @@ class LinkerSettingTab extends PluginSettingTab {
                         console.warn(e);
                     }
 
-                    text.setPlaceholder('List of directory names (separated by new line)')
+                    text.setPlaceholder('目录名称列表（用换行分隔）')
                         .setValue(setValue)
                         .onChange(async (value) => {
                             this.plugin.settings.excludedDirectoriesForLinking = value
@@ -1009,11 +1009,11 @@ class LinkerSettingTab extends PluginSettingTab {
                 });
         }
 
-        new Setting(containerEl).setName('Link style').setHeading();
+        new Setting(containerEl).setName('链接样式').setHeading();
 
         new Setting(containerEl)
-            .setName('Always show multiple references')
-            .setDesc('If toggled, if there are multiple matching notes, all references are shown behind the match. If not toggled, the references are only shown if hovering over the match.')
+            .setName('始终显示多个引用')
+            .setDesc('启用后，如果存在多个匹配的笔记，所有引用都会显示在匹配项后面。如果禁用，则仅在悬停在匹配项上时才显示引用。')
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.alwaysShowMultipleReferences).onChange(async (value) => {
                     // console.log("Always show multiple references: " + value);
@@ -1022,8 +1022,8 @@ class LinkerSettingTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
-            .setName('Virtual link suffix')
-            .setDesc('The suffix to add to auto generated virtual links.')
+            .setName('虚拟链接后缀')
+            .setDesc('要添加到自动生成的虚拟链接的后缀。')
             .addText((text) =>
                 text.setValue(this.plugin.settings.virtualLinkSuffix).onChange(async (value) => {
                     // console.log("New glossary suffix: " + value);
@@ -1031,8 +1031,8 @@ class LinkerSettingTab extends PluginSettingTab {
                 })
             );
         new Setting(containerEl)
-            .setName('Virtual link suffix for aliases')
-            .setDesc('The suffix to add to auto generated virtual links for aliases.')
+            .setName('别名虚拟链接后缀')
+            .setDesc('要添加到自动生成的别名虚拟链接的后缀。')
             .addText((text) =>
                 text.setValue(this.plugin.settings.virtualLinkAliasSuffix).onChange(async (value) => {
                     // console.log("New glossary suffix: " + value);
@@ -1042,9 +1042,9 @@ class LinkerSettingTab extends PluginSettingTab {
 
         // Toggle setting to apply default link styling
         new Setting(containerEl)
-            .setName('Apply default link styling')
+            .setName('应用默认链接样式')
             .setDesc(
-                'If toggled, the default link styling will be applied to virtual links. Furthermore, you can style the links yourself with a CSS-snippet affecting the class `virtual-link`. (Find the CSS snippet directory at Appearance -> CSS Snippets -> Open snippets folder)'
+                '启用后，默认链接样式将应用于虚拟链接。此外，您可以使用影响 `virtual-link` 类的 CSS 片段来自定义链接样式。（在外观 -> CSS 片段 -> 打开片段文件夹中找到 CSS 片段目录）'
             )
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.applyDefaultLinkStyling).onChange(async (value) => {
@@ -1055,8 +1055,8 @@ class LinkerSettingTab extends PluginSettingTab {
 
         // Toggle setting to use default link style for conversion
         new Setting(containerEl)
-            .setName('Use default link style for conversion')
-            .setDesc('If toggled, the default link style will be used for the conversion of virtual links to real links.')
+            .setName('转换时使用默认链接样式')
+            .setDesc('启用后，转换虚拟链接为真实链接时将使用默认链接样式。')
             .addToggle((toggle) =>
                 toggle.setValue(this.plugin.settings.useDefaultLinkStyleForConversion).onChange(async (value) => {
                     // console.log("Use default link style for conversion: " + value);
@@ -1068,8 +1068,8 @@ class LinkerSettingTab extends PluginSettingTab {
         if (!this.plugin.settings.useDefaultLinkStyleForConversion) {
             // Toggle setting to use markdown links
             new Setting(containerEl)
-                .setName('Use [[Wiki-links]]')
-                .setDesc('If toggled, the virtual links will be created as wiki-links instead of markdown links.')
+                .setName('使用 [[Wiki-链接]]')
+                .setDesc('启用后，虚拟链接将以维基链接形式创建，而不是 Markdown 链接。')
                 .addToggle((toggle) =>
                     toggle.setValue(!this.plugin.settings.useMarkdownLinks).onChange(async (value) => {
                         // console.log("Use markdown links: " + value);
@@ -1079,13 +1079,13 @@ class LinkerSettingTab extends PluginSettingTab {
 
             // Dropdown setting for link format
             new Setting(containerEl)
-                .setName('Link format')
-                .setDesc('The format of the generated links.')
+                .setName('链接格式')
+                .setDesc('生成链接的格式。')
                 .addDropdown((dropdown) =>
                     dropdown
-                        .addOption('shortest', 'Shortest')
-                        .addOption('relative', 'Relative')
-                        .addOption('absolute', 'Absolute')
+                        .addOption('shortest', '最短路径')
+                        .addOption('relative', '相对路径')
+                        .addOption('absolute', '绝对路径')
                         .setValue(this.plugin.settings.linkFormat)
                         .onChange(async (value) => {
                             // console.log("New link format: " + value);
